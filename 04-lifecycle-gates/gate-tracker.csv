@@ -1,0 +1,3 @@
+system_id,gate,review_date,outcome,conditions,approvers,evidence_links,conditions_due,conditions_closed
+AI-001,G1,2026-07-10,Approve with conditions,Complete bias retest on self-employed segment; finalise contest process,Committee chair; Risk; Legal/DPO; InfoSec,IA-001; bias-report-v1.1,2026-08-31,Y
+AI-001,G2,2026-09-16,Approve for limited release (pilot) with conditions,Contest process live before go-live; first quarterly fairness review to Committee,Committee chair,bias-report-v1.2; oversight-test-record; log-sample,2026-12-15,N

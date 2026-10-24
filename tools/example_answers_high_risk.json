@@ -1,0 +1,7 @@
+{
+  "A": [],
+  "B": ["B5"],
+  "C": ["C1", "C2", "C3", "C6", "C8"],
+  "autonomy": "L1",
+  "production_write_access": false
+}

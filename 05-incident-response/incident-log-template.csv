@@ -1,0 +1,2 @@
+incident_id,date_detected,reported_by,system_id,agent_id,severity,category,description,harm_or_impact,affected_parties,containment_action,root_cause,regulatory_notification_required,notification_date,owner,status,review_completed,actions_ref
+INC-001,2026-09-30,Compliance analyst,AI-002,,4,Near miss: output quality,Copilot cited a superseded policy version; user caught it before acting,None,1 user,Removed old document from index,Stale document in knowledge base,N,,Platform Engineering Manager,Closed,Y,ACT-014

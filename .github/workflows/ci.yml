@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Unit tests
+        working-directory: tools
+        run: python -m unittest test_risk_tier -v
+
+      - name: Validate sample registers
+        env:
+          # Fixed date so the fictional sample data does not become "overdue" over time
+          REGISTER_AS_OF: "2026-10-24"
+        run: python tools/validate_register.py 02-inventory/ai-system-register.csv 02-inventory/agent-register.csv
+
+      - name: Risk-tier examples run
+        run: |
+          python tools/risk_tier.py tools/example_answers.json
+          python tools/risk_tier.py tools/example_answers_high_risk.json
+
+      - name: Check markdown links
+        run: |
+          python - <<'PY'
+          import glob, os, re, sys
+          bad = []
+          for f in glob.glob("**/*.md", recursive=True):
+              text = open(f, encoding="utf-8").read()
+              for m in re.finditer(r"\]\(([^)#\s]+)(#[^)]*)?\)", text):
+                  t = m.group(1)
+                  if t.startswith(("http", "mailto")):
+                      continue
+                  if not os.path.exists(os.path.normpath(os.path.join(os.path.dirname(f), t))):
+                      bad.append((f, t))
+          print("broken links:", bad)
+          sys.exit(1 if bad else 0)
+          PY
